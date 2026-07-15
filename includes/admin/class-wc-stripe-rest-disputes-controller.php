@@ -27,7 +27,7 @@ class WC_Stripe_REST_Disputes_Controller extends WC_Stripe_REST_Base_Controller 
 	 * @var array
 	 */
 	protected $rest_args = [
-		'limit'            => [
+		'limit'          => [
 			'type'              => 'integer',
 			'default'           => 25,
 			'minimum'           => 1,
@@ -35,40 +35,34 @@ class WC_Stripe_REST_Disputes_Controller extends WC_Stripe_REST_Base_Controller 
 			'sanitize_callback' => 'absint',
 			'validate_callback' => 'rest_validate_request_arg',
 		],
-		'starting_after'   => [
+		'starting_after' => [
 			'type'              => 'string',
 			'required'          => false,
 			'sanitize_callback' => 'sanitize_text_field',
 			'validate_callback' => 'rest_validate_request_arg',
 		],
-		'ending_before'    => [
+		'ending_before'  => [
 			'type'              => 'string',
 			'required'          => false,
 			'sanitize_callback' => 'sanitize_text_field',
 			'validate_callback' => 'rest_validate_request_arg',
 		],
-		'customer'         => [
-			'type'              => 'string',
-			'required'          => false,
-			'sanitize_callback' => 'sanitize_text_field',
-			'validate_callback' => 'rest_validate_request_arg',
-		],
-		'customer_account' => [
-			'type'              => 'string',
-			'required'          => false,
-			'sanitize_callback' => 'sanitize_text_field',
-			'validate_callback' => 'rest_validate_request_arg',
-		],
-		'created'          => [
+		'created'        => [
 			'required'          => false,
 			'sanitize_callback' => [ WC_Stripe_REST_Validator::class, 'sanitize_timestamp' ],
 			'validate_callback' => [ WC_Stripe_REST_Validator::class, 'validate_timestamp' ],
 		],
-		'query'            => [
-			'type'              => 'array',
+		'charge'         => [
+			'type'              => 'string',
 			'required'          => false,
-			'sanitize_callback' => [ self::class, 'sanitize_query_field' ],
-			'validate_callback' => [ self::class, 'validate_query_field' ],
+			'sanitize_callback' => 'sanitize_text_field',
+			'validate_callback' => 'rest_validate_request_arg',
+		],
+		'payment_intent' => [
+			'type'              => 'string',
+			'required'          => false,
+			'sanitize_callback' => 'sanitize_text_field',
+			'validate_callback' => 'rest_validate_request_arg',
 		],
 	];
 
@@ -87,13 +81,15 @@ class WC_Stripe_REST_Disputes_Controller extends WC_Stripe_REST_Base_Controller 
 	];
 
 	protected array $stripe_response_allowed_fields = [
-		'object'        => '',
-		'has_more'      => '',
-		'data.id'       => '',
-		'data.amount'   => [ WC_Stripe_REST_Response_Filter::class, 'money_format' ],
-		'data.currency' => 'strtoupper',
-		'data.status'   => '',
-		'data.created'  => [ WC_Stripe_REST_Response_Filter::class, 'money_format' ],
+		'object'              => '',
+		'has_more'            => '',
+		'data.id'             => '',
+		'data.amount'         => [ WC_Stripe_REST_Response_Filter::class, 'money_format' ],
+		'data.currency'       => 'strtoupper',
+		'data.status'         => '',
+		'data.created'        => [ WC_Stripe_REST_Response_Filter::class, 'date_format' ],
+		'data.charge'         => '',
+		'data.payment_intent' => '',
 	];
 
 	protected array $stripe_details_response_allowed_fields = [
