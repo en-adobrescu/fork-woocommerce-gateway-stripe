@@ -72,7 +72,8 @@
         "includes/admin/class-wc-stripe-rest-payment-intents-controller.php",
 		"includes/admin/class-wc-stripe-rest-response-filter.php",
 		"includes/admin/class-wc-stripe-rest-validator.php",
-		"includes/admin/class-wc-stripe-rest-helper.php"
+		"includes/admin/class-wc-stripe-rest-helper.php",
+		"includes/admin/class-wc-stripe-rest-balance-controller.php"
       ]
     },
     "autoload-dev": {
