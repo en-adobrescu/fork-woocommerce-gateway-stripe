@@ -27,7 +27,7 @@ class WC_Stripe_REST_Payouts_Controller extends WC_Stripe_REST_Base_Controller {
 	 * @var array
 	 */
 	protected $rest_args = [
-		'limit'            => [
+		'limit'          => [
 			'type'              => 'integer',
 			'default'           => 25,
 			'minimum'           => 1,
@@ -35,40 +35,33 @@ class WC_Stripe_REST_Payouts_Controller extends WC_Stripe_REST_Base_Controller {
 			'sanitize_callback' => 'absint',
 			'validate_callback' => 'rest_validate_request_arg',
 		],
-		'starting_after'   => [
+		'starting_after' => [
 			'type'              => 'string',
 			'required'          => false,
 			'sanitize_callback' => 'sanitize_text_field',
 			'validate_callback' => 'rest_validate_request_arg',
 		],
-		'ending_before'    => [
+		'ending_before'  => [
 			'type'              => 'string',
 			'required'          => false,
 			'sanitize_callback' => 'sanitize_text_field',
 			'validate_callback' => 'rest_validate_request_arg',
 		],
-		'customer'         => [
+		'destination'    => [
 			'type'              => 'string',
 			'required'          => false,
 			'sanitize_callback' => 'sanitize_text_field',
 			'validate_callback' => 'rest_validate_request_arg',
 		],
-		'customer_account' => [
-			'type'              => 'string',
-			'required'          => false,
-			'sanitize_callback' => 'sanitize_text_field',
-			'validate_callback' => 'rest_validate_request_arg',
-		],
-		'created'          => [
+		'arrival_date'   => [
 			'required'          => false,
 			'sanitize_callback' => [ WC_Stripe_REST_Validator::class, 'sanitize_timestamp' ],
 			'validate_callback' => [ WC_Stripe_REST_Validator::class, 'validate_timestamp' ],
 		],
-		'query'            => [
-			'type'              => 'array',
+		'created'        => [
 			'required'          => false,
-			'sanitize_callback' => [ self::class, 'sanitize_query_field' ],
-			'validate_callback' => [ self::class, 'validate_query_field' ],
+			'sanitize_callback' => [ WC_Stripe_REST_Validator::class, 'sanitize_timestamp' ],
+			'validate_callback' => [ WC_Stripe_REST_Validator::class, 'validate_timestamp' ],
 		],
 	];
 
@@ -164,7 +157,7 @@ class WC_Stripe_REST_Payouts_Controller extends WC_Stripe_REST_Base_Controller {
 		}
 
 		if ( ! isset( $search_params['id'] ) ) {
-			$allowed_fields = $this->stripe_response_allowed_fields;
+			$allowed_fields = [];//$this->stripe_response_allowed_fields;
 		} else {
 			$allowed_fields = $this->stripe_details_response_allowed_fields;
 		}
