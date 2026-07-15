@@ -71,14 +71,7 @@ class WC_Stripe_REST_Disputes_Controller extends WC_Stripe_REST_Base_Controller 
 	 *
 	 * @var array
 	 */
-	protected static $rest_query_args = [
-		'amount'   => 'numeric',
-		'created'  => 'numeric',
-		'currency' => 'token',
-		'customer' => 'token',
-		'metadata' => 'token',
-		'status'   => 'token',
-	];
+	protected static $rest_query_args = [];
 
 	protected array $stripe_response_allowed_fields = [
 		'object'              => '',
